@@ -88,18 +88,27 @@ btnId3.addEventListener("click", () => { // Hôtels & restaurants
 
 
 //====================================================================================================================
-/////////////////////////////////////////////////////
+
 // Gestion des modules administarteur ///////////////
-/////////////////////////////////////////////////////
+
 // INDEX : 1- GESTION BOITE MODALE                 //
 //         2- GESTION TOKEN LOGIN                  //
 //         3- GENERATION DS LA MODALE              //
 //         4- GESTION SUPPRESSION PROJET           //
 //         5- GESTION AJOUT PROJET                 //
-//         6- GESTION AJOUT D'UN PROJET            //
-/////////////////////////////////////////////////////
+//         6- GESTION AJOUT D'UN PROJET    
+
+
+
+
+
+
+
+
+
+
 // INDEX : 1-// GESTION BOITE MODALE ////////////////
-/////////////////////////////////////////////////////
+
 // Reset la section projets
 function resetmodaleSectionProjets() {  
 	modaleSectionProjets.innerHTML = "";
@@ -202,9 +211,8 @@ window.addEventListener("keydown", function(e) {
 });
 
 
-////////////////////////////////////////////////////
 // INDEX : 2-//// GESTION TOKEN LOGIN //////////////
-////////////////////////////////////////////////////
+
 
 // Récupération du token
 const token = localStorage.getItem("token");
@@ -224,9 +232,9 @@ function adminPanel() {
         }
     });
 }
-////////////////////////////////////////////////////////////
+
 // INDEX : 3-// GESTION SUPPRESSION D'UN PROJET /////////////
-////////////////////////////////////////////////////////////
+
 
 // Event listener sur les boutons supprimer par apport a leur id
 function deleteWork() {
@@ -275,9 +283,9 @@ async function refreshPage(i){
 }
 
 
-////////////////////////////////////////////////////
+
 // INDEX : 4-/ GESTION BOITE MODALE AJOUT PROJET ///
-////////////////////////////////////////////////////
+
 
 // Ouverture de la modale projet
 let modaleProjet = null;
@@ -323,9 +331,8 @@ const backToModale = function(e) {
 };
 
 
-// ////////////////////////////////////////////////////
 // // INDEX : 5-/ GESTION AJOUT D'UN PROJET        ///
-// ////////////////////////////////////////////////////
+
 
 const btnAjouterProjet = document.querySelector(".js-add-work");
 btnAjouterProjet.addEventListener("click", addWork);
