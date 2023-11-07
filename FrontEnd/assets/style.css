@@ -236,7 +236,9 @@ footer nav ul {
 
 /********login**********/
 
-
+nav a{
+	text-decoration: none;
+}
 .login{
 	display: flex;
 	flex-direction: column;
