@@ -8,24 +8,24 @@ const btnId1 = document.querySelector(".filter__btn-id-1");
 const btnId2 = document.querySelector(".filter__btn-id-2");
 const btnId3 = document.querySelector(".filter__btn-id-3");
 
-const sectionProjets = document.querySelector(".gallery"); 
+const sectionProjets = document.querySelector(".gallery");
 
 let data = null;
 let id;
 generationProjets(data, null);
 
 // Reset la section projets
-function resetSectionProjets() {  
-	sectionProjets.innerHTML = "";
+function resetSectionProjets() {
+    sectionProjets.innerHTML = "";
 }
 
-// Génère les projets
-async function generationProjets(data, id) { 
+// Génère les projets dans la gallery
+async function generationProjets(data, id) {
     try {
-        const response = await fetch('http://localhost:5678/api/works'); 
+        const response = await fetch('http://localhost:5678/api/works');
         data = await response.json();
     }
-    catch{
+    catch {
         const p = document.createElement("p");
         p.classList.add("error");
         p.innerHTML = "Une erreur est survenue lors de la récupération des projets<br><br>Une tentative de reconnexion automatique auras lieu dans une minute<br><br><br><br>Si le problème persiste, veuillez contacter l'administrateur du site";
@@ -36,27 +36,31 @@ async function generationProjets(data, id) {
 
     resetSectionProjets()
 
-    // Filtre les résultats
+    // Filtre les résultats, pour récupérer la catégorie "ID"
     if ([1, 2, 3].includes(id)) {
-        data = data.filter(data => data.categoryId == id);}
 
-     // Change la couleur du bouton en fonction du filtre
+        data = data.filter(data => data.categoryId == id);
+    }
+
+    // Change la couleur du bouton en fonction du filtre
     document.querySelectorAll(".filter__btn").forEach(btn => {
-        btn.classList.remove("filter__btn--active");})
+        btn.classList.remove("filter__btn--active");
+    })
     document.querySelector(`.filter__btn-id-${id}`).classList.add("filter__btn--active");
 
-    if (data.length === 0 || data === undefined) { 
+    if (data.length === 0 || data === undefined) {
         const p = document.createElement("p");
         p.classList.add("error");
         p.innerHTML = "Aucun projet à afficher <br><br>Toutes nos excuses pour la gêne occasionnée";
         sectionProjets.appendChild(p);
-        return;}
+        return;
+    }
 
     // Génère les projets
     if (id === null || [1, 2, 3].includes(id)) {
         for (let i = 0; i < data.length; i++) {
-            
-            const figure = document.createElement("figure"); 
+
+            const figure = document.createElement("figure");
             sectionProjets.appendChild(figure);
             figure.classList.add(`js-projet-${data[i].id}`); // Ajoute l'id du projet pour le lien vers la modale lors de la supression 
             const img = document.createElement("img");
@@ -64,26 +68,31 @@ async function generationProjets(data, id) {
             img.alt = data[i].title;
             figure.appendChild(img);
 
-            const figcaption = document.createElement("figcaption");
+            const figcaption = document.createElement("figcaption");// ajout d'une légende
             figcaption.innerHTML = data[i].title;
             figure.appendChild(figcaption);
         }
-}}
+    }
+}
 
 //////////////
 // >>> FILTRES
 
 btnAll.addEventListener("click", () => { // Tous les projets
-    generationProjets(data, null);})
+    generationProjets(data, null);
+})
 
 btnId1.addEventListener("click", () => { // Objets
-    generationProjets(data, 1);})
+    generationProjets(data, 1);
+})
 
 btnId2.addEventListener("click", () => { // Appartements
-    generationProjets(data, 2);})
+    generationProjets(data, 2);
+})
 
 btnId3.addEventListener("click", () => { // Hôtels & restaurants
-    generationProjets(data, 3);})
+    generationProjets(data, 3);
+})
 
 
 
@@ -110,21 +119,23 @@ btnId3.addEventListener("click", () => { // Hôtels & restaurants
 // INDEX : 1-// GESTION BOITE MODALE ////////////////
 
 // Reset la section projets
-function resetmodaleSectionProjets() {  
-	modaleSectionProjets.innerHTML = "";
+function resetmodaleSectionProjets() {
+    modaleSectionProjets.innerHTML = "";
 }
 
 
 // Ouverture de la modale
 let modale = null;
 let dataAdmin;
-const modaleSectionProjets = document.querySelector(".js-admin-projets"); 
+const modaleSectionProjets = document.querySelector(".js-admin-projets");
 
-const openModale = function(e) {
+const openModale = function (e) {
     e.preventDefault()
     modale = document.querySelector(e.target.getAttribute("href"))
 
     modaleProjets(); // Génère les projets dans la modale admin
+
+
     // attendre la fin de la génération des projets
     setTimeout(() => {
         modale.style.display = null
@@ -133,22 +144,23 @@ const openModale = function(e) {
     }, 25);
     // Ajout EventListener sur les boutons pour ouvrir la modale projet
     document.querySelectorAll(".js-modale-projet").forEach(a => {
-        a.addEventListener("click", openModaleProjet)});
+        a.addEventListener("click", openModaleProjet)
+    });
 
     // Apl fermeture modale
-    modale.addEventListener("click", closeModale)
-    modale.querySelector(".js-modale-close").addEventListener("click", closeModale)
+    modale.addEventListener("click", closeModale) // ferme la modale en cliquant à l'exterieure
+    modale.querySelector(".js-modale-close").addEventListener("click", closeModale)// ferme la modale en cliquant  sur la croix
     modale.querySelector(".js-modale-stop").addEventListener("click", stopPropagation)
 
 };
 
 // Génère les projets dans la modale admin
-async function modaleProjets() { 
-    const response = await fetch('http://localhost:5678/api/works'); 
+async function modaleProjets() {
+    const response = await fetch('http://localhost:5678/api/works');
     dataAdmin = await response.json();
     resetmodaleSectionProjets()
     for (let i = 0; i < dataAdmin.length; i++) {
-        
+
         const div = document.createElement("div");
         div.classList.add("gallery__item-modale");
         modaleSectionProjets.appendChild(div);
@@ -163,8 +175,8 @@ async function modaleProjets() {
         p.classList.add(dataAdmin[i].id, "js-delete-work");
 
 
-        const icon = document.createElement("i");
-        icon.classList.add("fa-solid", "fa-trash-can"); 
+        const icon = document.createElement("i"); // ajout de l'icone corbeille
+        icon.classList.add("fa-solid", "fa-trash-can");
         p.appendChild(icon);
 
         const a = document.createElement("a");
@@ -176,18 +188,18 @@ async function modaleProjets() {
 
 
 //  Ferme la modale
-const closeModale = function(e) {
+const closeModale = function (e) {
     e.preventDefault()
     if (modale === null) return
 
-    
+
     modale.setAttribute("aria-hidden", "true")
     modale.removeAttribute("aria-modal")
 
     modale.querySelector(".js-modale-close").removeEventListener("click", closeModale)
 
     // Fermeture de la modale apres 400ms 
-    window.setTimeout(function() {
+    window.setTimeout(function () {
         modale.style.display = "none"
         modale = null
         resetmodaleSectionProjets()
@@ -195,8 +207,8 @@ const closeModale = function(e) {
 };
 
 
-// Définit la "border" du click pour fermer la modale
-const stopPropagation = function(e) {
+
+const stopPropagation = function (e) {
     e.stopPropagation()
 };
 // Selectionne les éléments qui ouvrent la modale
@@ -204,10 +216,11 @@ document.querySelectorAll(".js-modale").forEach(a => {
     a.addEventListener("click", openModale)
 });
 // Ferme la modale avec la touche echap
-window.addEventListener("keydown", function(e) {
+window.addEventListener("keydown", function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
         closeModale(e)
-        closeModaleProjet(e)}
+        closeModaleProjet(e)
+    }
 });
 
 
@@ -241,7 +254,8 @@ function deleteWork() {
     let btnDelete = document.querySelectorAll(".js-delete-work");
     for (let i = 0; i < btnDelete.length; i++) {
         btnDelete[i].addEventListener("click", deleteProjets);
-    }}
+    }
+}
 
 // Supprimer le projet
 async function deleteProjets() {
@@ -252,29 +266,29 @@ async function deleteProjets() {
 
     await fetch(`http://localhost:5678/api/works/${this.classList[0]}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}`},
+        headers: { Authorization: `Bearer ${token}` },
     })
 
-    .then (response => {
-        console.log(response)
-        // Token good
-        if (response.status === 204) {
-            console.log("DEBUG SUPPRESION DU PROJET " + this.classList[0])
-            refreshPage(this.classList[0])
-        }
-        // Token inorrect
-        else if (response.status === 401) {
-            alert("Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte valide")
-            window.location.href = "login.html";
-        }
-    })
-    .catch (error => {
-        console.log(error)
-    })
+        .then(response => {
+            console.log(response)
+            // Token good
+            if (response.status === 204) {
+                console.log("DEBUG SUPPRESION DU PROJET " + this.classList[0])
+                refreshPage(this.classList[0])
+            }
+            // Token inorrect
+            else if (response.status === 401) {
+                alert("Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte valide")
+                window.location.href = "login.html";
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
 
 // Rafraichit les projets sans recharger la page
-async function refreshPage(i){
+async function refreshPage(i) {
     modaleProjets(); // Re lance une génération des projets dans la modale admin
 
     // supprime le projet de la page d'accueil
@@ -289,7 +303,7 @@ async function refreshPage(i){
 
 // Ouverture de la modale projet
 let modaleProjet = null;
-const openModaleProjet = function(e) {
+const openModaleProjet = function (e) {
     e.preventDefault()
     modaleProjet = document.querySelector(e.target.getAttribute("href"))
 
@@ -307,7 +321,7 @@ const openModaleProjet = function(e) {
 
 
 // Fermeture de la modale projet
-const closeModaleProjet = function(e) {
+const closeModaleProjet = function (e) {
     if (modaleProjet === null) return
 
     modaleProjet.setAttribute("aria-hidden", "true")
@@ -318,12 +332,12 @@ const closeModaleProjet = function(e) {
 
     modaleProjet.style.display = "none"
     modaleProjet = null
-    
+
     closeModale(e)
 };
 
 // Retour au modale admin
-const backToModale = function(e) {
+const backToModale = function (e) {
     e.preventDefault()
     modaleProjet.style.display = "none"
     modaleProjet = null
@@ -352,36 +366,39 @@ async function addWork(event) {
     } else if (categoryId !== "1" && categoryId !== "2" && categoryId !== "3") {
         alert("Merci de choisir une catégorie valide");
         return;
-        } else {
-    try {
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("category", categoryId);
-        formData.append("image", image);
+    } else {
+        try {
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("category", categoryId);
+            formData.append("image", image);
 
-        const response = await fetch("http://localhost:5678/api/works", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            body: formData,
-        });
+            const response = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                body: formData,
+            });
 
-        if (response.status === 201) {
-            alert("Projet ajouté avec succès :)");
-            modaleProjets(dataAdmin);
-            backToModale(event);
-            generationProjets(data, null);
-            
-        } else if (response.status === 400) {
-            alert("Merci de remplir tous les champs");
-        } else if (response.status === 500) {
-            alert("Erreur serveur");
-        } else if (response.status === 401) {
-            alert("Vous n'êtes pas autorisé à ajouter un projet");
-            window.location.href = "login.html";
-    }}
+            if (response.status === 201) {
+                alert("Projet ajouté avec succès :)");
+                modaleProjets(dataAdmin);
+                backToModale(event);
+                generationProjets(data, null);
 
-    catch (error) {
-        console.log(error);
-}}}
+            } else if (response.status === 400) {
+                alert("Merci de remplir tous les champs");
+            } else if (response.status === 500) {
+                alert("Erreur serveur");
+            } else if (response.status === 401) {
+                alert("Vous n'êtes pas autorisé à ajouter un projet");
+                window.location.href = "login.html";
+            }
+        }
+
+        catch (error) {
+            console.log(error);
+        }
+    }
+}
