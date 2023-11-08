@@ -252,19 +252,19 @@ function adminPanel() {
 
 
 async function deleteProjets(projectId) {
-    console.log("DEBUG DEBUT DE FUNCTION SUPPRESSION")
-    console.log(projectId);
-    console.log(token);
+  //  console.log("DEBUG DEBUT DE FUNCTION SUPPRESSION")
+   // console.log(projectId);
+   // console.log(token);
 
     await fetch(`http://localhost:5678/api/works/${projectId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
     })
         .then(response => {
-            console.log(response);
+            //console.log(response);
             // Token valide
             if (response.status === 204) {
-                console.log("DEBUG SUPPRESSION DU PROJET " + projectId);
+               // console.log("DEBUG SUPPRESSION DU PROJET " + projectId);
 
                 // refreshPage(projectId);
             }
@@ -275,7 +275,7 @@ async function deleteProjets(projectId) {
             }
         })
         .catch(error => {
-            console.log(error);
+           // console.log(error);
         });
 }
 
@@ -408,7 +408,7 @@ async function addWork(event) {
         }
 
         catch (error) {
-            console.log(error);
+           // console.log(error);
         }
     }
 }

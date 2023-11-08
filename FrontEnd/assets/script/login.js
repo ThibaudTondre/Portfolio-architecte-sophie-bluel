@@ -1,4 +1,4 @@
-const alredyLoggedError = document.getElementsByClassName(".alredyLogged__error");
+const alreadyLoggedError = document.getElementsByClassName(".alreadyLogged__error");
 const loginEmailError = document.getElementsByClassName(".loginEmail__error");
 const loginMdpError = document.getElementsByClassName(".loginMdp__error");
 
@@ -7,16 +7,16 @@ const password = document.getElementById("password");
 
 const submit = document.getElementById("submit");
 
-alredyLogged();
+alreadyLogged();
 
 // Si l'utilisateur est déjà connecté, on supprime le token
-function alredyLogged() {
+function alreadyLogged() {
     if (localStorage.getItem("token")) {
         localStorage.removeItem("token");
 
         const p = document.createElement("p");
         p.innerHTML = "<br><br><br>Vous avez été déconnecté, veuillez vous reconnecter";
-        alredyLoggedError.appendChild(p);
+        alreadyLoggedError.appendChild(p);
         return;
     }
 }
@@ -79,6 +79,7 @@ function login(id) {
             // prevenir l'utilisateur en cas d'erreur
 
             .catch(error =>
-                console.log(error));
+                console.log(error)
+               );
     }
 }
