@@ -99,12 +99,12 @@ btnId3.addEventListener("click", () => { // Hôtels & restaurants
 //====================================================================================================================
 
 
-//         1- GESTION BOITE MODALE                 //
-//         2- GESTION TOKEN LOGIN                  //
-//         3- GENERATION DS LA MODALE              //
-//         4- GESTION SUPPRESSION PROJET           //
-//         5- GESTION AJOUT PROJET                 //
-//         6- GESTION AJOUT D'UN PROJET    
+//         1 GESTION BOITE MODALE                 //
+//         2 GESTION TOKEN LOGIN                  //
+//         3 GENERATION DS LA MODALE              //
+//         4 GESTION SUPPRESSION PROJET           //
+//         5 GESTION AJOUT PROJET                 //
+//         6 GESTION AJOUT D'UN PROJET            //
 
 
 
