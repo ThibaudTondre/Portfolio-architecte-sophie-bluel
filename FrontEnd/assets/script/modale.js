@@ -118,7 +118,7 @@ btnId3.addEventListener("click", () => { // Hôtels & restaurants
 // INDEX : 1-// GESTION BOITE MODALE ////////////////
 
 // Reset la section projets
-function resetmodaleSectionProjets() {
+function resetModaleSectionProjets() {
     modaleSectionProjets.innerHTML = "";
 }
 
@@ -157,7 +157,7 @@ const openModale = function (e) {
 async function modaleProjets() {
     const response = await fetch('http://localhost:5678/api/works');
     dataAdmin = await response.json();
-    resetmodaleSectionProjets()
+    resetModaleSectionProjets()
     for (let i = 0; i < dataAdmin.length; i++) {
 
         const div = document.createElement("div");
@@ -202,7 +202,7 @@ const closeModale = function (e) {
     window.setTimeout(function () {
         modale.style.display = "none"
         modale = null
-        resetmodaleSectionProjets()
+        resetModaleSectionProjets()
     }, 300)
 
 };
