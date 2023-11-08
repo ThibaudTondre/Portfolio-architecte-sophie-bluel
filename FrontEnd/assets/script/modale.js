@@ -98,7 +98,6 @@ btnId3.addEventListener("click", () => { // Hôtels & restaurants
 
 //====================================================================================================================
 
-// Gestion des modules administarteur ///////////////
 
 // INDEX : 1- GESTION BOITE MODALE                 //
 //         2- GESTION TOKEN LOGIN                  //
@@ -199,11 +198,13 @@ const closeModale = function (e) {
     modale.querySelector(".js-modale-close").removeEventListener("click", closeModale)
 
     // Fermeture de la modale apres 400ms 
-    window.setTimeout(function () {
+    
+   window.setTimeout(function () {
         modale.style.display = "none"
         modale = null
         resetmodaleSectionProjets()
     }, 300)
+    
 };
 
 
@@ -274,7 +275,7 @@ async function deleteProjets() {
             // Token good
             if (response.status === 204) {
                 console.log("DEBUG SUPPRESION DU PROJET " + this.classList[0])
-                refreshPage(this.classList[0])
+               refreshPage(this.classList[0])
             }
             // Token inorrect
             else if (response.status === 401) {
