@@ -99,7 +99,7 @@ btnId3.addEventListener("click", () => { // Hôtels & restaurants
 //====================================================================================================================
 
 
-// INDEX : 1- GESTION BOITE MODALE                 //
+//         1- GESTION BOITE MODALE                 //
 //         2- GESTION TOKEN LOGIN                  //
 //         3- GENERATION DS LA MODALE              //
 //         4- GESTION SUPPRESSION PROJET           //
@@ -198,13 +198,13 @@ const closeModale = function (e) {
     modale.querySelector(".js-modale-close").removeEventListener("click", closeModale)
 
     // Fermeture de la modale apres 400ms 
-    
-   window.setTimeout(function () {
+
+    window.setTimeout(function () {
         modale.style.display = "none"
         modale = null
         resetmodaleSectionProjets()
     }, 300)
-    
+
 };
 
 
@@ -249,14 +249,66 @@ function adminPanel() {
 
 // INDEX : 3-// GESTION SUPPRESSION D'UN PROJET /////////////
 
-
-// Event listener sur les boutons supprimer par apport a leur id
+/*
+// Event listener sur les boutons supprimer par rapport a leur id
 function deleteWork() {
     let btnDelete = document.querySelectorAll(".js-delete-work");
     for (let i = 0; i < btnDelete.length; i++) {
         btnDelete[i].addEventListener("click", deleteProjets);
     }
 }
+
+*/
+
+async function deleteProjets(projectId) {
+    console.log("DEBUG DEBUT DE FUNCTION SUPPRESSION")
+    console.log(projectId);
+    console.log(token);
+
+    await fetch(`http://localhost:5678/api/works/${projectId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+    })
+    .then(response => {
+        console.log(response);
+        // Token valide
+        if (response.status === 204) {
+            console.log("DEBUG SUPPRESSION DU PROJET " + projectId);
+            refreshPage(projectId);
+        }
+        // Token incorrect
+        else if (response.status === 401) {
+            alert("Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte valide.");
+            window.location.href = "login.html";
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
+
+function deleteWork() {
+    let btnDelete = document.querySelectorAll(".js-delete-work");
+    for (let i = 0; i < btnDelete.length; i++) {
+        btnDelete[i].addEventListener("click", showConfirmation);
+    }
+}
+
+function showConfirmation() {
+    const projectId = this.classList[0];
+    const confirmation = confirm("Voulez-vous vraiment supprimer ce projet ?");
+    
+    if (confirmation) {
+        // L'utilisateur a confirmé la suppression, vous pouvez appeler la fonction de suppression ici
+        deleteProjets(projectId);
+    }
+}
+
+
+
+
+/*
+
 
 // Supprimer le projet
 async function deleteProjets() {
@@ -275,7 +327,7 @@ async function deleteProjets() {
             // Token good
             if (response.status === 204) {
                 console.log("DEBUG SUPPRESION DU PROJET " + this.classList[0])
-               refreshPage(this.classList[0])
+                refreshPage(this.classList[0])
             }
             // Token inorrect
             else if (response.status === 401) {
@@ -287,7 +339,7 @@ async function deleteProjets() {
             console.log(error)
         })
 }
-
+*/
 // Rafraichit les projets sans recharger la page
 async function refreshPage(i) {
     modaleProjets(); // Re lance une génération des projets dans la modale admin

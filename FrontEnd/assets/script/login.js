@@ -30,6 +30,7 @@ submit.addEventListener("click", () => {
     login(user);
 })
 
+
 // Fonction de connexion
 function login(id) {
     console.log(id);
@@ -38,7 +39,7 @@ function login(id) {
     // vérification de l'email
     if (!id.email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/g)) {
         const p = document.createElement("p");
-        p.innerHTML = "Veuillez entrer une addresse mail valide";
+        p.innerHTML = "Veuillez entrer une adresse mail valide";
         loginEmailError.appendChild(p);
         return;
     }
