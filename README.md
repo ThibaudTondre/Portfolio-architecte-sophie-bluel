@@ -5,12 +5,13 @@
 ![](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
 ![](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 
-nbsp;
+
 ## Description
 Projet six du parcours développeur front-end de chez OpenClassrooms
 L'objectif était de créez une page web dynamique avec JavaScript 
 > Pour en savoir plus, retrouvez le brief de mission en bas de page
 ## Overview
+![Sophie-Bluel](https://github.com/ThibaudTondre/Portfolio-architecte-sophie-bluel/assets/138129113/778028dd-3537-42ca-be76-7edc55ab419a)
 
 ## Compétences évaluées
 
