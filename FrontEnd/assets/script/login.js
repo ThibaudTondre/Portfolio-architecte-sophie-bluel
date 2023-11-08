@@ -1,6 +1,6 @@
-const alredyLoggedError = document.querySelector(".alredyLogged__error");
-const loginEmailError = document.querySelector(".loginEmail__error");
-const loginMdpError = document.querySelector(".loginMdp__error");
+const alredyLoggedError = document.getElementsByClassName(".alredyLogged__error");
+const loginEmailError = document.getElementsByClassName(".loginEmail__error");
+const loginMdpError = document.getElementsByClassName(".loginMdp__error");
 
 const email = document.getElementById("email");
 const password = document.getElementById("password");

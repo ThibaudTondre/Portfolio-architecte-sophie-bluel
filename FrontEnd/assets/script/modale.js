@@ -39,7 +39,7 @@ async function generationProjets(data, id) {
     // Filtre les résultats, pour récupérer la catégorie "ID"
     if ([1, 2, 3].includes(id)) {
 
-        data = data.filter(data => data.categoryId == id);
+        data = data.filter(data => data.categoryId === id);
     }
 
     // Change la couleur du bouton en fonction du filtre
@@ -249,16 +249,7 @@ function adminPanel() {
 
 // INDEX : 3-// GESTION SUPPRESSION D'UN PROJET /////////////
 
-/*
-// Event listener sur les boutons supprimer par rapport a leur id
-function deleteWork() {
-    let btnDelete = document.querySelectorAll(".js-delete-work");
-    for (let i = 0; i < btnDelete.length; i++) {
-        btnDelete[i].addEventListener("click", deleteProjets);
-    }
-}
 
-*/
 
 async function deleteProjets(projectId) {
     console.log("DEBUG DEBUT DE FUNCTION SUPPRESSION")
@@ -269,22 +260,23 @@ async function deleteProjets(projectId) {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
     })
-    .then(response => {
-        console.log(response);
-        // Token valide
-        if (response.status === 204) {
-            console.log("DEBUG SUPPRESSION DU PROJET " + projectId);
-            refreshPage(projectId);
-        }
-        // Token incorrect
-        else if (response.status === 401) {
-            alert("Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte valide.");
-            window.location.href = "login.html";
-        }
-    })
-    .catch(error => {
-        console.log(error);
-    });
+        .then(response => {
+            console.log(response);
+            // Token valide
+            if (response.status === 204) {
+                console.log("DEBUG SUPPRESSION DU PROJET " + projectId);
+
+                // refreshPage(projectId);
+            }
+            // Token incorrect
+            else if (response.status === 401) {
+                alert("Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte valide.");
+                window.location.href = "login.html";
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }
 
 function deleteWork() {
@@ -297,49 +289,14 @@ function deleteWork() {
 function showConfirmation() {
     const projectId = this.classList[0];
     const confirmation = confirm("Voulez-vous vraiment supprimer ce projet ?");
-    
+
     if (confirmation) {
-        // L'utilisateur a confirmé la suppression, vous pouvez appeler la fonction de suppression ici
+
         deleteProjets(projectId);
     }
 }
 
 
-
-
-/*
-
-
-// Supprimer le projet
-async function deleteProjets() {
-
-    console.log("DEBUG DEBUT DE FUNCTION SUPRESSION")
-    console.log(this.classList[0])
-    console.log(token)
-
-    await fetch(`http://localhost:5678/api/works/${this.classList[0]}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-    })
-
-        .then(response => {
-            console.log(response)
-            // Token good
-            if (response.status === 204) {
-                console.log("DEBUG SUPPRESION DU PROJET " + this.classList[0])
-                refreshPage(this.classList[0])
-            }
-            // Token inorrect
-            else if (response.status === 401) {
-                alert("Vous n'êtes pas autorisé à supprimer ce projet, merci de vous connecter avec un compte valide")
-                window.location.href = "login.html";
-            }
-        })
-        .catch(error => {
-            console.log(error)
-        })
-}
-*/
 // Rafraichit les projets sans recharger la page
 async function refreshPage(i) {
     modaleProjets(); // Re lance une génération des projets dans la modale admin
